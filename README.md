@@ -10,7 +10,6 @@ In this project, you'll create a personal portfolio website using the **Django**
 - Building dynamic web pages
 - Creating a database-driven website
 - Styling with HTML, CSS, and JavaScript
-- Deploying your project
 
 ## Getting Started
 
