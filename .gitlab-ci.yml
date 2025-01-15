@@ -44,7 +44,7 @@ unit_test: # run tests in registry image
     - ./manage.py migrate # build database
     - coverage run ./manage.py test # run the tests
     - coverage xml # create report
-    - cp coverage.xml /builds/alexander.shanmugam/digital-portfolio/ # copy report to gitlab directory
+    - cp coverage.xml /builds/wet/hs24/portfolio-shanmugam-alexander/ # copy report to gitlab directory
   artifacts: # save the report as an artifact
     reports:
       coverage_report:

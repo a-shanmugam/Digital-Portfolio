@@ -16,7 +16,7 @@ services:
       timeout: 5s
       retries: 3
   web:
-    image: cr.gitlab.fhnw.ch/alexander.shanmugam/digital-portfolio
+    image: cr.gitlab.fhnw.ch/wet/hs24/portfolio-shanmugam-alexander
     command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py loaddata fixtures/data.json && python manage.py runserver 0.0.0.0:8000" # migrate the database and run the server
     container_name: django_web
     ports:
