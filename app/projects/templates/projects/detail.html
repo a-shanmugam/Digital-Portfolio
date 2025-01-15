@@ -1,0 +1,17 @@
+<!-- project/templates/project/detail.html -->
+<!--Displays the details of a selected project-->
+{% extends "base.html" %}
+{% block page_title %}
+    <h2>{{ project.title }}</h2>
+    <small>{{ project.created_on.date }}</small>
+{% endblock page_title %}
+{% block page_content %}
+    <br>
+    <br>
+    {% if project.image %}
+        <img class="eighty"
+             src="{{ project.image.url }}"
+             alt="Image for {{ project.title }}" height="400" width="400">
+    {% endif %}
+    <p>{{ project.body | linebreaks }}</p>
+{% endblock page_content %}

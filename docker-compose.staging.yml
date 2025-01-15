@@ -1,0 +1,28 @@
+services:
+  db: # database for django to store information
+    image: mariadb:latest
+    container_name: django_db
+    environment:
+      - MYSQL_ROOT_PASSWORD=mypass
+      - MYSQL_DATABASE=djangodb
+    ports:
+      - "3306:3306"
+    volumes: # create volume to make database persistent
+      - db_data:/var/lib/mysql
+    healthcheck: # define healthcheck using mariadb's included healthcheck.sh
+      test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
+      start_period: 10s
+      interval: 10s
+      timeout: 5s
+      retries: 3
+  web:
+    image: cr.gitlab.fhnw.ch/alexander.shanmugam/digital-portfolio
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000" # migrate the database and run the server
+    container_name: django_web
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy # run only when healthcheck of db has passed
+volumes:
+  db_data: { }
