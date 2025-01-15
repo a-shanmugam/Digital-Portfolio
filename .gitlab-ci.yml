@@ -1,0 +1,59 @@
+stages:
+  - lint  # lint and format the code
+  - build # build the app as a docker image
+  - test  # run tests to ensure functionality
+
+
+lint:
+  stage: lint
+  image: python:3.9
+  before_script:
+    - pip install isort black flake8 djlint # install dependencies
+  script:
+    - isort ./app
+    - black --check --config pyproject.toml ./app/
+    - flake8 ./app
+    - djlint ./app --check
+    - djlint ./app --lint
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event' # only run on merge_request_event
+
+build:
+  stage: build
+  image: docker
+  services:
+    - docker:dind
+  script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u $CI_REGISTRY_USER $CI_REGISTRY  --password-stdin # login to gitlab registry
+    - docker build -t $CI_REGISTRY_IMAGE . --target=staging # build the image
+    - docker push $CI_REGISTRY_IMAGE # push the image to the gitlab registry
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event' # only run on merge_request_event
+
+unit_test: # run tests in registry image
+  image:
+    name: $CI_REGISTRY_IMAGE
+    entrypoint: [""]
+  stage: test
+  services: # add database service
+    - name: mariadb:latest
+      alias: django_db
+  script:
+    - cd /home
+    - ./manage.py makemigrations
+    - ./manage.py migrate # build database
+    - coverage run ./manage.py test # run the tests
+    - coverage xml # create report
+    - cp coverage.xml /builds/alexander.shanmugam/digital-portfolio/ # copy report to gitlab directory
+  artifacts: # save the report as an artifact
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.xml
+  variables:
+    MYSQL_ROOT_PASSWORD: mypass
+    MYSQL_DATABASE: djangodb
+    MYSQL_USER: root
+    DATABASE_URL: "mysql://root:mypass@db:3306/djangodb"
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event' # only run on merge_request_event
