@@ -1,0 +1,16 @@
+<!--  about/templates/about/contact.html -->
+<!--Displays the contact form-->
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block page_title %}
+    <h2>Contact me</h2>
+{% endblock page_title %}
+{% block page_content %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <div class="form-actions">
+            <button type="submit">Send</button>
+        </div>
+    </form>
+{% endblock page_content %}

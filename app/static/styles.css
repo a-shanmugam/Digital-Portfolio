@@ -1,0 +1,81 @@
+:root {
+    --sans-font: 'Work Sans'; /* Set global font */
+}
+/* sets global styles  */
+html {
+    font-family: var(--sans-font);
+    color: #C14420;
+    background-color: #F1F2F2;
+    scroll-behavior: smooth
+}
+
+h1 {
+    font-size: 3rem
+}
+
+h2 {
+    margin-top: 3rem;
+    margin-bottom: 0;
+    font-size: 2.6rem
+}
+
+h3 {
+    margin-top: 1rem;
+    margin-bottom: 0;
+    font-size: 2rem;
+    color: black;
+}
+
+p {
+    margin: 1.5rem 0
+}
+
+a, a:visited {
+    color: var(--accent)
+}
+
+
+a:hover {
+    text-decoration: none
+}
+
+/* title containing a link  */
+h1 a, h1 a:visited {
+    text-decoration: none
+}
+/* title containing a link, on hover */
+h1 a:hover {
+    color: black;
+}
+
+/* Container: creates a flex layout */
+.container {
+    display: flex; /* Makes the container a flexbox */
+    height: 100vh; /* Make the container take up the full height of the viewport */
+}
+
+/* Sidebar: fixed width on the left */
+.sidebar {
+    width: 300px;
+    margin: 60px 30px 20px 100px;
+}
+
+/* Content: takes the remaining space */
+.content {
+    flex: 1;
+    margin: 0 150px 0 0;
+}
+
+/* Eighty: used for content, takes 80% of the available width and centers it */
+.eighty {
+    max-width: 80%;
+    margin: auto;
+    display: block;
+}
+
+/* Thirty: used for content, takes 30% of the available width without centering */
+.thirty {
+    max-width: 30%;
+    display: block;
+}
+

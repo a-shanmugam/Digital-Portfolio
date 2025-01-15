@@ -1,0 +1,30 @@
+<!-- project/templates/project/index.html -->
+<!--Displays a list of a all projects-->
+{% extends "base.html" %}
+{% block page_title %}
+    <form method="get" action="{% url 'project_index' %}">
+        <!-- Search form -->
+        {{ form.as_p }}
+        <button type="submit">Search</button>
+    </form>
+    <div class="title">
+        <h2>Projects</h2>
+    </div>
+{% endblock page_title %}
+{% block page_content %}
+    {% block projects %}
+        {% for project in projects %}
+            <hr>
+            {% if project.image %}
+                <!--Display thumbnails for projects in list-->
+                <img class="thirty"
+                     src="{{ project.image.url }}"
+                     alt="Image for {{ project.title }}" height="248" width="248">
+            {% endif %}
+            <h3>
+                <a href="{% url 'project_detail' project.pk %}">{{ project.title }}</a>
+            </h3>
+            <small>{{ project.created_on.date }}</small>
+        {% endfor %}
+    {% endblock projects %}
+{% endblock page_content %}

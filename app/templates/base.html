@@ -1,0 +1,58 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="keywords" content="portfolio"/>
+        <meta name="description" content="Personal portfolio of Alexander Shanmugam"/>
+        <title>Alexander Shanmugam</title>
+        <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600&display=swap"
+              rel="stylesheet">
+        <!-- add font -->
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
+        {% load static %}
+        <link rel="shortcut icon"
+              type="image/png"
+              href="{% static 'favicon.jpg' %}">
+        <!-- load favicon -->
+    </head>
+    <body>
+        <div class="container">
+            <div id="sidebar" class="sidebar">
+                {% block sidebar %}
+                    {% load static %}
+                    <div>
+                        <a href="/">
+                            <img class="eighty" src="{% static 'avatar.jpg' %}" alt="Avatar" height="240" width="240">
+                        </a>
+                    </div>
+                    <h1>
+                        <a href="/">Alexander Shanmugam</a>
+                    </h1>
+                    <p>Data Scientist with a special interest in DevOps</p>
+                    <hr>
+                    <ul>
+                        <li>
+                            <a href="/blog/">Blog</a>
+                        </li>
+                        <li>
+                            <a href="/projects/">Projects</a>
+                        </li>
+                    </ul>
+                    <hr>
+                    <ul>
+                        <li>
+                            <a href="/about/contact/">Contact</a>
+                        </li>
+                    </ul>
+                {% endblock %}
+            </div>
+            <div id="content" class="content">
+                {% block page_title %}
+                {% endblock page_title %}
+                {% block page_content %}{% endblock %}
+            </div>
+        </div>
+    </body>
+</html>
